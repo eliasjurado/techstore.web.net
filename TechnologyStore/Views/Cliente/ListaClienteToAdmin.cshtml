@@ -1,0 +1,78 @@
+﻿@model IEnumerable<TechnologyStore.Models.usp_adm_cliente_listar_Result>
+
+@{
+    ViewBag.Title = "ListaClienteToAdmin";
+    Layout = "~/Views/Shared/_LayoutAdministrador.cshtml";
+}
+
+<h2>Clientes</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nomCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.apeCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dniCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tlfCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.direcCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nomDistrito)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.emailCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.passCliente)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.apeCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dniCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tlfCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.direcCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomDistrito)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.emailCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.passCliente)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

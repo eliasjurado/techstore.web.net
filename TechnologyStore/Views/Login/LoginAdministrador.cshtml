@@ -1,0 +1,43 @@
+﻿@model TechnologyStore.Models.Empleado
+
+@{
+    ViewBag.Title = "Login Administrador";
+    Layout = "~/Views/Shared/_LayoutLoginAdmin.cshtml";
+}
+
+<div class="login-box">
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+
+
+        <div class="login-logo">
+            <a href="@Url.Action("LoginAdministrador", "Login")"><b>Techno</b>logy</a>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group has-feedback">
+                @Html.LabelFor(model => model.emailEmpleado, htmlAttributes: new { @class = "col-form-label" })
+                @Html.EditorFor(model => model.emailEmpleado, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.emailEmpleado, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group has-feedback">
+                @Html.LabelFor(model => model.passEmpleado, htmlAttributes: new { @class = "col-form-label" })
+                @Html.EditorFor(model => model.passEmpleado, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.passEmpleado, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <center>
+                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    </center>
+                </div>
+                <!-- /.col -->
+            </div>
+
+        }
+    </div>
+    <!-- /.login-box-body -->
+</div>

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<TechnologyStore.Models.usp_adm_listar_empleados_Result>
+
+@{
+    ViewBag.Title = "ListadoEmpleados";
+    Layout = "~/Views/Shared/_LayoutAdministrador.cshtml";
+}
+
+<h2>Lista de Empleados</h2>
+
+<p>
+    @Html.ActionLink("Nuevo Empleado", "SaveEmpleado")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idEmpleado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nomEmpleado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.apeEmpleado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dniEmpleado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tlfEmpleado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.direcEmpleado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nomDistrito)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nomCargo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.emailEmpleado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.passEmpleado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nomTipoUsuario)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idEmpleado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomEmpleado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.apeEmpleado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dniEmpleado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tlfEmpleado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.direcEmpleado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomDistrito)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomCargo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.emailEmpleado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.passEmpleado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomTipoUsuario)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

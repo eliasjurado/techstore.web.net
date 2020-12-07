@@ -1,0 +1,60 @@
+﻿@model TechnologyStore.Models.Cliente
+
+@{
+    ViewBag.Title = "LoginCliente";
+    Layout = "~/Views/Shared/_LayoutProductos.cshtml";
+}
+
+<div class="page-head_agile_info_w3l">
+</div>
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a href="@Url.Action("ListadoProductos", "Producto")">Inicio</a>
+                    <i>|</i>
+                </li>
+                <li>Iniciar sesión</li>
+            </ul>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="contact py-sm-5 py-4">
+        <div class="container py-xl-4 py-lg-2">
+            <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+                <span>I</span>niciar
+                <span>S</span>esión
+            </h3>
+            <div class="contact-grids1 w3agile-6">
+                <div class="contact-form1 form-group">
+                    @Html.LabelFor(model => model.emailCliente, htmlAttributes: new { @class = "col-form-label" })
+                    @Html.EditorFor(model => model.emailCliente, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.emailCliente, "", new { @class = "text-danger" })
+                </div>
+                <div class=" contact-form1 form-group">
+                    @Html.LabelFor(model => model.passCliente, htmlAttributes: new { @class = "col-form-label" })
+                    @Html.EditorFor(model => model.passCliente, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.passCliente, "", new { @class = "text-danger" })
+                </div>
+                <div class="contact-form">
+                    <input type="submit" class="form-control" value="Iniciar sesión">
+                </div>
+                <p class="text-center dont-do mt-3">
+                    ¿No tienes cuenta?
+                    <a href="@Url.Action("RegistrarCliente", "Cliente" )" data-toggle="" data-target="">
+                        Regístrate
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

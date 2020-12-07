@@ -1,0 +1,39 @@
+﻿@model IEnumerable<TechnologyStore.Models.usp_adm_cargo_listar_Result>
+
+@{
+    ViewBag.Title = "Lista de Cargos";
+    Layout = "~/Views/Shared/_LayoutAdministrador.cshtml";
+}
+
+<h2>Cargos</h2>
+
+<p>
+    @Html.ActionLink("Nuevo Cargo", "SaveCargo")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idCargo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nomCargo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idCargo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomCargo)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "UpdateCargo", new {  id = item.idCargo  }) |
+            @Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

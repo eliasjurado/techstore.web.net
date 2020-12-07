@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Electro Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <title> TechnologyStore - @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"
+          rel="stylesheet">
+</head>
+
+
+
+
+<body>
+
+
+    <div class="header-bot">
+        <div class="container">
+            <div class="row header-bot_inner_wthreeinfo_header_mid">
+                <!-- logo -->
+                <div class="col-md-3 logo_agile">
+                    <h1 class="text-center">
+                        <a href="@Url.Action("ListadoProductos", "Producto")" class="font-weight-bold font-italic">
+                            Technology Store
+                        </a>
+                    </h1>
+                </div>
+                <!-- //logo -->
+                <!-- header-bot -->
+                <div class="col-md-9 header mt-4 mb-md-0 mb-4">
+                    <div class="row">
+
+                        <!-- Carrito de Compra -->
+                        <div class="col-2 top_nav_right text-center mt-sm-0 mt-2">
+                            <div class="wthreecartaits wthreecartaits2 cart cart box_1">
+                                <form action="@Url.Action("ListadoCarrito", "Producto")" method="post" class="last">
+                                    <input type="hidden" name="cmd" value="_cart">
+                                    <input type="hidden" name="display" value="1">
+                                    @if (Session["carrito"] != null && ((List<Compra_Detalle>)Session["carrito"]).Count > 0)
+                                    {
+                                        <button class="btn w3view-cart" type="submit" name="submit" value="">
+                                            <i class="fas fa-cart-arrow-down"></i>
+                                        </button>
+                                    }
+                                </form>
+                            </div>
+                        </div>
+                        <!-- //Carrito de Compra -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="services-breadcrumb contenedor-black">
+
+        <div class="agile_inner_breadcrumb border-left">
+
+            <div class="container">
+                <ul class="w3_short text-center">
+                    <li>
+                        <a href="@Url.Action("ListadoProductos", "Producto")">Inicio</a>
+                        <i class="text-white">|</i>
+
+
+                        <a href="@Url.Action("Contactanos", "Cliente")">Nosotros</a>
+                        <i class="text-white">|</i>
+
+
+                        <a href="@Url.Action("Contactanos", "Cliente")">Contáctanos</a>
+                        <i class="text-white">|</i>
+
+
+                        @using TechnologyStore.Models
+                        @if (Session["cliente"] == null)
+                        {
+                            <a href="@Url.Action("LoginCliente", "Login")" data-toggle="" data-target="" class="text-white">
+                                <i class="fas fa-sign-in-alt mr-2"></i>Iniciar sesión
+                            </a>
+                        }
+                        else
+                        {
+                            
+                                <a href="@Url.Action("CuentaCliente", "Cliente")" data-toggle="" data-target="" class="text-white">
+                                    <i class="fas fa-user mr-2"></i>Mi cuenta
+                                </a>
+                            
+                        }
+
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+
+    <hr />
+    <footer class="contenedor-black">
+        <p>&copy; @DateTime.Now.Year - TechnologyStore.com.pe Todos los derechos reservados</p>
+    </footer>
+
+
+
+
+
+
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            $(".dropdown").hover(
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+                    $(this).toggleClass('open');
+                },
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+                    $(this).toggleClass('open');
+                }
+            );
+        });
+    </script>
+    <!-- //nav smooth scroll -->
+    <!-- popup modal (for location)-->
+    <script>
+        $(document).ready(function () {
+            $('.popup-with-zoom-anim').magnificPopup({
+                type: 'inline',
+                fixedContentPos: false,
+                fixedBgPos: true,
+                overflowY: 'auto',
+                closeBtnInside: true,
+                preloader: false,
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-zoom-in'
+            });
+
+        });
+    </script>
+    <!-- //popup modal (for location)-->
+    <!-- cart-js -->
+    <script>
+        paypals.minicarts.render(); //use only unique class names other than paypals.minicarts.Also Replace same class name in css and minicart.min.js
+
+        paypals.minicarts.cart.on('checkout', function (evt) {
+            var items = this.items(),
+                len = items.length,
+                total = 0,
+                i;
+
+            // Count the number of each item in the cart
+            for (i = 0; i < len; i++) {
+                total += items[i].get('quantity');
+            }
+
+            if (total < 3) {
+                alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
+                evt.preventDefault();
+            }
+        });
+    </script>
+    <!-- //cart-js -->
+    <!-- password-script -->
+    <script>
+        window.onload = function () {
+            document.getElementById("password1").onchange = validatePassword;
+            document.getElementById("password2").onchange = validatePassword;
+        }
+
+        function validatePassword() {
+            var pass2 = document.getElementById("password2").value;
+            var pass1 = document.getElementById("password1").value;
+            if (pass1 != pass2)
+                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+            else
+                document.getElementById("password2").setCustomValidity('');
+            //empty string means no validation error
+        }
+    </script>
+    <!-- //password-script -->
+    <!-- scroll seller -->
+    <!-- //scroll seller -->
+    <!-- smoothscroll -->
+    <!-- //smoothscroll -->
+    <!-- start-smooth-scrolling -->
+
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
+            });
+        });
+    </script>
+    <!-- //end-smooth-scrolling -->
+    <!-- smooth-scrolling-of-move-up -->
+    <script>
+        $(document).ready(function () {
+            /*
+            var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+            */
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+
+        });
+    </script>
+    <!-- //smooth-scrolling-of-move-up -->
+    <!-- for bootstrap working -->
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

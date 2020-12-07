@@ -1,0 +1,96 @@
+﻿@model TechnologyStore.Models.Producto
+
+@{
+    ViewBag.Title = "DetalleProducto";
+    Layout = "~/Views/Shared/_LayoutProductos.cshtml";
+}
+
+
+
+
+<div class="page-head_agile_info_w3l">
+</div>
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a href="@Url.Action("ListadoProductos", "Producto")">Inicio</a>
+                    <i>|</i>
+                </li>
+                <li>Detalle del producto</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="banner-bootom-w3-agileits py-5">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>D</span>etalle
+            <span>D</span>el
+            <span>P</span>roducto
+        </h3>
+        <!-- //tittle heading -->
+        <div class="row">
+            <div class="col-lg-5 col-md-8 single-right-left ">
+                <div class="grid images_3_of_2">
+                    <div class="flexslider">
+                        <div class="slides">
+                            <img id="img" src="~/Content/images/@(Html.DisplayFor(model => model.idProducto)).jpg" class="img-fluid" alt="">
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7 single-right-left simpleCart_shelfItem">
+                <h3 class="mb-3">@Html.DisplayFor(model => model.desProducto)</h3>
+                <p class="mb-3">
+                    <span class="item_price">S/ @Html.DisplayFor(model => model.precioProducto)</span>
+                    <label>Envío gratis</label>
+                </p>
+                <div class="product-single-w3l">
+                    <ul>
+                        <li class="mb-3">
+                            @Html.DisplayNameFor(model => model.Categoria.nomCategoria): @Html.DisplayFor(model => model.Categoria.nomCategoria)
+                        </li>
+                        <li class="mb-3">
+                            En @Html.DisplayNameFor(model => model.stock_act): @Html.DisplayFor(model => model.stock_act) unidades
+                        </li>
+                    </ul>
+                </div>
+                <div class="occasion-cart">
+                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                        <form action="#" method="post">
+                            <fieldset>
+                                <br />
+                                @Html.ActionLink("Añadir al carrito", "ElegirProducto", new { id = Model.idProducto }, new { @class = "boton1" })
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="~/Content/flexslider.css" type="text/css" media="screen" />
+
+<script src="~/Scripts/jquery.flexslider.js"></script>
+<script>
+    // Can also be used with $(document).ready()
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            controlNav: "thumbnails"
+        });
+    });
+</script>
+<script>
+    $("#img").data('zoom-image', 'newURL').elevateZoom({
+        responsive: true,
+        zoomType: "lens",
+        containLensZoom: true
+    });
+</script>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<TechnologyStore.Models.usp_adm_producto_listar_Result>
+
+@{
+    ViewBag.Title = "ListaProductoToAdmin";
+    Layout = "~/Views/Shared/_LayoutAdministrador.cshtml";
+}
+
+<h2>ListaProductoToAdmin</h2>
+
+<p>
+    @Html.ActionLink("Nuevo Producto", "SaveProductoToAdmin")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idProducto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.desProducto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.precioProducto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stock_act)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stock_min)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nomCategoria)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idProducto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.desProducto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.precioProducto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.stock_act)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.stock_min)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomCategoria)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

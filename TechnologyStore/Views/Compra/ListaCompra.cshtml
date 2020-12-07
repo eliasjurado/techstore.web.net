@@ -1,0 +1,61 @@
+﻿@model IEnumerable<TechnologyStore.Models.usp_adm_compra_lista_Result>
+
+@{
+    ViewBag.Title = "ListaCompra";
+    Layout = "~/Views/Shared/_LayoutAdministrador.cshtml";
+}
+
+<h2>Ventas Realizadas</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idCompra)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nomCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.apeCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fec_ped_comp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fec_ent_comp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.desProducto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.est_comp)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idCompra)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.apeCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fec_ped_comp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fec_ent_comp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.desProducto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.est_comp)
+        </td>
+    </tr>
+}
+
+</table>

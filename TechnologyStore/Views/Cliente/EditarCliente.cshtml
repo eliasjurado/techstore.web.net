@@ -1,0 +1,95 @@
+﻿@model TechnologyStore.Models.Cliente
+
+@{
+    ViewBag.Title = "Editar datos de Cliente";
+    Layout = "~/Views/Shared/_LayoutProductos.cshtml";
+}
+
+
+
+
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a href="@Url.Action("ListadoProductos", "Producto")">Inicio</a>
+                    <i>|</i>
+                </li>
+                <li>
+                    <a href="@Url.Action("CuentaCliente", "Cliente")">Mi cuenta</a>
+                    <i>|</i>
+                </li>
+                <li>Editar cliente</li>
+            </ul>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="contact py-sm-5 py-4">
+        <div class="container py-xl-4 py-lg-2">
+            <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+                <span>E</span>ditar
+                <span>C</span>liente
+            </h3>
+            <div class="contact-grids1 w3agile-6">
+                <form action="#" method="post">
+                    @Html.HiddenFor(model => model.dniCliente, new { @Value = "0" })
+                    @Html.HiddenFor(model => model.emailCliente, new { @Value = "-" })
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="contact-form1 form-group">
+                                @Html.LabelFor(model => model.nomCliente, htmlAttributes: new { @class = "col-form-label" })
+                                @Html.EditorFor(model => model.nomCliente, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.nomCliente, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="contact-form1 form-group">
+                                @Html.LabelFor(model => model.apeCliente, htmlAttributes: new { @class = "col-form-label" })
+                                @Html.EditorFor(model => model.apeCliente, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.apeCliente, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="contact-form1 form-group">
+                                @Html.LabelFor(model => model.idDistrito, "Ciudad", htmlAttributes: new { @class = "col-form-label" })
+                                @Html.DropDownList("idDistrito", (SelectList)ViewBag.ciudades, "--Seleccione--", htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.idDistrito, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="contact-form1 form-group">
+                                @Html.LabelFor(model => model.direcCliente, htmlAttributes: new { @class = "col-form-label" })
+                                @Html.EditorFor(model => model.direcCliente, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.direcCliente, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="contact-form1 form-group">
+                                @Html.LabelFor(model => model.tlfCliente, htmlAttributes: new { @class = "col-form-label" })
+                                @Html.EditorFor(model => model.tlfCliente, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.tlfCliente, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="contact-form1 form-group">
+                                @Html.LabelFor(model => model.passCliente, htmlAttributes: new { @class = "col-form-label" })
+                                @Html.EditorFor(model => model.passCliente, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.passCliente, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <input type="submit" class="form-control" value="Guardar cambios">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+

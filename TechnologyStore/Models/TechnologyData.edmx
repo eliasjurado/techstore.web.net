@@ -1,0 +1,1182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TechnologyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="idCargo" />
+          </Key>
+          <Property Name="idCargo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomCargo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="idCategoria" />
+          </Key>
+          <Property Name="idCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomCategoria" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="idCliente" />
+          </Key>
+          <Property Name="idCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomCliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apeCliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="dniCliente" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="tlfCliente" Type="varchar" MaxLength="15" />
+          <Property Name="direcCliente" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="idDistrito" Type="int" Nullable="false" />
+          <Property Name="emailCliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="passCliente" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="idTipoUsuario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Compra_Cabecera">
+          <Key>
+            <PropertyRef Name="idCompra" />
+          </Key>
+          <Property Name="idCompra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idCliente" Type="int" Nullable="false" />
+          <Property Name="fec_ped_comp" Type="datetime" Nullable="false" />
+          <Property Name="fec_ent_comp" Type="datetime" Nullable="false" />
+          <Property Name="est_comp" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Compra_Detalle">
+          <Key>
+            <PropertyRef Name="idCompra" />
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idCompra" Type="int" Nullable="false" />
+          <Property Name="idProducto" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Distrito">
+          <Key>
+            <PropertyRef Name="idDistrito" />
+          </Key>
+          <Property Name="idDistrito" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomDistrito" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="idEmpleado" />
+          </Key>
+          <Property Name="idEmpleado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomEmpleado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apeEmpleado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="dniEmpleado" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="tlfEmpleado" Type="varchar" MaxLength="15" />
+          <Property Name="direcEmpleado" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="idDistrito" Type="int" Nullable="false" />
+          <Property Name="idCargo" Type="int" Nullable="false" />
+          <Property Name="emailEmpleado" Type="varchar" MaxLength="50" />
+          <Property Name="passEmpleado" Type="varchar" MaxLength="30" />
+          <Property Name="idTipoUsuario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="desProducto" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="idCategoria" Type="int" Nullable="false" />
+          <Property Name="precioProducto" Type="money" Nullable="false" />
+          <Property Name="stock_act" Type="int" Nullable="false" />
+          <Property Name="stock_min" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tipo_Usuario">
+          <Key>
+            <PropertyRef Name="idTipoUsuario" />
+          </Key>
+          <Property Name="idTipoUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomTipoUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CARGO_EMP">
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargo">
+              <PropertyRef Name="idCargo" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="idCargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CAT_PROD">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="idCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="idCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLI_COMPRA">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Compra_Cabecera" Type="Self.Compra_Cabecera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="idCliente" />
+            </Principal>
+            <Dependent Role="Compra_Cabecera">
+              <PropertyRef Name="idCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COMPCABE_DETA">
+          <End Role="Compra_Cabecera" Type="Self.Compra_Cabecera" Multiplicity="1" />
+          <End Role="Compra_Detalle" Type="Self.Compra_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compra_Cabecera">
+              <PropertyRef Name="idCompra" />
+            </Principal>
+            <Dependent Role="Compra_Detalle">
+              <PropertyRef Name="idCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIST_CLI">
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Distrito">
+              <PropertyRef Name="idDistrito" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idDistrito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIST_EMP">
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Distrito">
+              <PropertyRef Name="idDistrito" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="idDistrito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_DETA">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Compra_Detalle" Type="Self.Compra_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="Compra_Detalle">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIPOUSU_CLI">
+          <End Role="Tipo_Usuario" Type="Self.Tipo_Usuario" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Usuario">
+              <PropertyRef Name="idTipoUsuario" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idTipoUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIPOUSU_EMP">
+          <End Role="Tipo_Usuario" Type="Self.Tipo_Usuario" Multiplicity="1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Usuario">
+              <PropertyRef Name="idTipoUsuario" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="idTipoUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="usp_adm_actualizar_empleado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="apellido" Type="varchar" Mode="In" />
+          <Parameter Name="dni" Type="char" Mode="In" />
+          <Parameter Name="telefono" Type="varchar" Mode="In" />
+          <Parameter Name="direccion" Type="varchar" Mode="In" />
+          <Parameter Name="iddistrito" Type="int" Mode="In" />
+          <Parameter Name="idcargo" Type="int" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="pass" Type="varchar" Mode="In" />
+          <Parameter Name="idtipusu" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_cargo_actualizar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_cargo_eliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_cargo_listar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_adm_cargo_registrar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_categoria_actualizar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_categoria_eliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_categoria_listar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_adm_categoria_registrar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_cliente_actualizar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="apellido" Type="varchar" Mode="In" />
+          <Parameter Name="dni" Type="char" Mode="In" />
+          <Parameter Name="telefono" Type="varchar" Mode="In" />
+          <Parameter Name="direccion" Type="varchar" Mode="In" />
+          <Parameter Name="distrito" Type="int" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_cliente_eliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_cliente_listar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_adm_compra_lista" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_adm_distrito_actualizar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_distrito_eliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_distrito_listar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_adm_distrito_registrar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_eliminar_empleado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigoemp" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_listar_empleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_adm_loginadmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="pass" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_producto_actualizar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="int" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="precio" Type="money" Mode="In" />
+          <Parameter Name="stockact" Type="int" Mode="In" />
+          <Parameter Name="stockmin" Type="int" Mode="In" />
+          <Parameter Name="idcateg" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_producto_eliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_producto_listar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_adm_producto_registrar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="precio" Type="money" Mode="In" />
+          <Parameter Name="stockact" Type="int" Mode="In" />
+          <Parameter Name="stockmin" Type="int" Mode="In" />
+          <Parameter Name="idcateg" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_registrar_empleado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="apellido" Type="varchar" Mode="In" />
+          <Parameter Name="dni" Type="char" Mode="In" />
+          <Parameter Name="telefono" Type="varchar" Mode="In" />
+          <Parameter Name="direccion" Type="varchar" Mode="In" />
+          <Parameter Name="coddis" Type="int" Mode="In" />
+          <Parameter Name="codcargo" Type="int" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="pass" Type="varchar" Mode="In" />
+          <Parameter Name="codtipusu" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_tipousuario_actualizar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_tipousuario_eliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_adm_tipousuario_listar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_adm_tipousuario_registrar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_detalle_compra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idcomp" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_detalle_producto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cod" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_editar_cliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codcli" Type="int" Mode="In" />
+          <Parameter Name="nomcli" Type="varchar" Mode="In" />
+          <Parameter Name="apecli" Type="varchar" Mode="In" />
+          <Parameter Name="iddist" Type="int" Mode="In" />
+          <Parameter Name="dircli" Type="varchar" Mode="In" />
+          <Parameter Name="tlfcli" Type="varchar" Mode="In" />
+          <Parameter Name="passcli" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_insertar_compra_detalle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_comp" Type="int" Mode="In" />
+          <Parameter Name="cod_prod" Type="int" Mode="In" />
+          <Parameter Name="cantidad" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_listar_productos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_logincliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="pass" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_registrar_cliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nomcli" Type="varchar" Mode="In" />
+          <Parameter Name="apecli" Type="varchar" Mode="In" />
+          <Parameter Name="dnicli" Type="char" Mode="In" />
+          <Parameter Name="tlfcli" Type="varchar" Mode="In" />
+          <Parameter Name="dircli" Type="varchar" Mode="In" />
+          <Parameter Name="iddist" Type="int" Mode="In" />
+          <Parameter Name="emailcli" Type="varchar" Mode="In" />
+          <Parameter Name="passcli" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_transaccion_compra_cabecera" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_comp" Type="int" Mode="In" />
+          <Parameter Name="cod_cli" Type="int" Mode="In" />
+          <Parameter Name="fec_ped_comp" Type="datetime" Mode="In" />
+          <Parameter Name="fec_ent_comp" Type="datetime" Mode="In" />
+          <Parameter Name="est_comp" Type="int" Mode="In" />
+          <Parameter Name="tipo" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="TechnologyModelStoreContainer">
+          <EntitySet Name="Cargo" EntityType="Self.Cargo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Compra_Cabecera" EntityType="Self.Compra_Cabecera" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Compra_Detalle" EntityType="Self.Compra_Detalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Distrito" EntityType="Self.Distrito" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo_Usuario" EntityType="Self.Tipo_Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CARGO_EMP" Association="Self.FK_CARGO_EMP">
+            <End Role="Cargo" EntitySet="Cargo" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CAT_PROD" Association="Self.FK_CAT_PROD">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLI_COMPRA" Association="Self.FK_CLI_COMPRA">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Compra_Cabecera" EntitySet="Compra_Cabecera" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COMPCABE_DETA" Association="Self.FK_COMPCABE_DETA">
+            <End Role="Compra_Cabecera" EntitySet="Compra_Cabecera" />
+            <End Role="Compra_Detalle" EntitySet="Compra_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIST_CLI" Association="Self.FK_DIST_CLI">
+            <End Role="Distrito" EntitySet="Distrito" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIST_EMP" Association="Self.FK_DIST_EMP">
+            <End Role="Distrito" EntitySet="Distrito" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_DETA" Association="Self.FK_PRODUCTO_DETA">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Compra_Detalle" EntitySet="Compra_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIPOUSU_CLI" Association="Self.FK_TIPOUSU_CLI">
+            <End Role="Tipo_Usuario" EntitySet="Tipo_Usuario" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIPOUSU_EMP" Association="Self.FK_TIPOUSU_EMP">
+            <End Role="Tipo_Usuario" EntitySet="Tipo_Usuario" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TechnologyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="idCargo" />
+          </Key>
+          <Property Name="idCargo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomCargo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Empleado" Relationship="Self.FK_CARGO_EMP" FromRole="Cargo" ToRole="Empleado" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="idCategoria" />
+          </Key>
+          <Property Name="idCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomCategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_CAT_PROD" FromRole="Categoria" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="idCliente" />
+          </Key>
+          <Property Name="idCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apeCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dniCliente" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="tlfCliente" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="direcCliente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idDistrito" Type="Int32" Nullable="false" />
+          <Property Name="emailCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="passCliente" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idTipoUsuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Compra_Cabecera" Relationship="Self.FK_CLI_COMPRA" FromRole="Cliente" ToRole="Compra_Cabecera" />
+          <NavigationProperty Name="Distrito" Relationship="Self.FK_DIST_CLI" FromRole="Cliente" ToRole="Distrito" />
+          <NavigationProperty Name="Tipo_Usuario" Relationship="Self.FK_TIPOUSU_CLI" FromRole="Cliente" ToRole="Tipo_Usuario" />
+        </EntityType>
+        <EntityType Name="Compra_Cabecera">
+          <Key>
+            <PropertyRef Name="idCompra" />
+          </Key>
+          <Property Name="idCompra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCliente" Type="Int32" Nullable="false" />
+          <Property Name="fec_ped_comp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fec_ent_comp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="est_comp" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_CLI_COMPRA" FromRole="Compra_Cabecera" ToRole="Cliente" />
+          <NavigationProperty Name="Compra_Detalle" Relationship="Self.FK_COMPCABE_DETA" FromRole="Compra_Cabecera" ToRole="Compra_Detalle" />
+        </EntityType>
+        <EntityType Name="Compra_Detalle">
+          <Key>
+            <PropertyRef Name="idCompra" />
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idCompra" Type="Int32" Nullable="false" />
+          <Property Name="idProducto" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Compra_Cabecera" Relationship="Self.FK_COMPCABE_DETA" FromRole="Compra_Detalle" ToRole="Compra_Cabecera" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_PRODUCTO_DETA" FromRole="Compra_Detalle" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Distrito">
+          <Key>
+            <PropertyRef Name="idDistrito" />
+          </Key>
+          <Property Name="idDistrito" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomDistrito" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_DIST_CLI" FromRole="Distrito" ToRole="Cliente" />
+          <NavigationProperty Name="Empleado" Relationship="Self.FK_DIST_EMP" FromRole="Distrito" ToRole="Empleado" />
+        </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="idEmpleado" />
+          </Key>
+          <Property Name="idEmpleado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomEmpleado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apeEmpleado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dniEmpleado" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="tlfEmpleado" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="direcEmpleado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idDistrito" Type="Int32" Nullable="false" />
+          <Property Name="idCargo" Type="Int32" Nullable="false" />
+          <Property Name="emailEmpleado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="passEmpleado" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="idTipoUsuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cargo" Relationship="Self.FK_CARGO_EMP" FromRole="Empleado" ToRole="Cargo" />
+          <NavigationProperty Name="Distrito" Relationship="Self.FK_DIST_EMP" FromRole="Empleado" ToRole="Distrito" />
+          <NavigationProperty Name="Tipo_Usuario" Relationship="Self.FK_TIPOUSU_EMP" FromRole="Empleado" ToRole="Tipo_Usuario" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="desProducto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idCategoria" Type="Int32" Nullable="false" />
+          <Property Name="precioProducto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="stock_act" Type="Int32" Nullable="false" />
+          <Property Name="stock_min" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Categoria" Relationship="Self.FK_CAT_PROD" FromRole="Producto" ToRole="Categoria" />
+          <NavigationProperty Name="Compra_Detalle" Relationship="Self.FK_PRODUCTO_DETA" FromRole="Producto" ToRole="Compra_Detalle" />
+        </EntityType>
+        <EntityType Name="Tipo_Usuario">
+          <Key>
+            <PropertyRef Name="idTipoUsuario" />
+          </Key>
+          <Property Name="idTipoUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomTipoUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_TIPOUSU_CLI" FromRole="Tipo_Usuario" ToRole="Cliente" />
+          <NavigationProperty Name="Empleado" Relationship="Self.FK_TIPOUSU_EMP" FromRole="Tipo_Usuario" ToRole="Empleado" />
+        </EntityType>
+        <Association Name="FK_CARGO_EMP">
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargo">
+              <PropertyRef Name="idCargo" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="idCargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CAT_PROD">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="idCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="idCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLI_COMPRA">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Compra_Cabecera" Type="Self.Compra_Cabecera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="idCliente" />
+            </Principal>
+            <Dependent Role="Compra_Cabecera">
+              <PropertyRef Name="idCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIST_CLI">
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Distrito">
+              <PropertyRef Name="idDistrito" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idDistrito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIPOUSU_CLI">
+          <End Role="Tipo_Usuario" Type="Self.Tipo_Usuario" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Usuario">
+              <PropertyRef Name="idTipoUsuario" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idTipoUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COMPCABE_DETA">
+          <End Role="Compra_Cabecera" Type="Self.Compra_Cabecera" Multiplicity="1" />
+          <End Role="Compra_Detalle" Type="Self.Compra_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compra_Cabecera">
+              <PropertyRef Name="idCompra" />
+            </Principal>
+            <Dependent Role="Compra_Detalle">
+              <PropertyRef Name="idCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_DETA">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Compra_Detalle" Type="Self.Compra_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="Compra_Detalle">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIST_EMP">
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Distrito">
+              <PropertyRef Name="idDistrito" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="idDistrito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIPOUSU_EMP">
+          <End Role="Tipo_Usuario" Type="Self.Tipo_Usuario" Multiplicity="1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Usuario">
+              <PropertyRef Name="idTipoUsuario" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="idTipoUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TechnologyDataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cargo" EntityType="Self.Cargo" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Compra_Cabecera" EntityType="Self.Compra_Cabecera" />
+          <EntitySet Name="Compra_Detalle" EntityType="Self.Compra_Detalle" />
+          <EntitySet Name="Distrito" EntityType="Self.Distrito" />
+          <EntitySet Name="Empleado" EntityType="Self.Empleado" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" />
+          <EntitySet Name="Tipo_Usuario" EntityType="Self.Tipo_Usuario" />
+          <AssociationSet Name="FK_CARGO_EMP" Association="Self.FK_CARGO_EMP">
+            <End Role="Cargo" EntitySet="Cargo" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CAT_PROD" Association="Self.FK_CAT_PROD">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLI_COMPRA" Association="Self.FK_CLI_COMPRA">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Compra_Cabecera" EntitySet="Compra_Cabecera" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIST_CLI" Association="Self.FK_DIST_CLI">
+            <End Role="Distrito" EntitySet="Distrito" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIPOUSU_CLI" Association="Self.FK_TIPOUSU_CLI">
+            <End Role="Tipo_Usuario" EntitySet="Tipo_Usuario" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COMPCABE_DETA" Association="Self.FK_COMPCABE_DETA">
+            <End Role="Compra_Cabecera" EntitySet="Compra_Cabecera" />
+            <End Role="Compra_Detalle" EntitySet="Compra_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_DETA" Association="Self.FK_PRODUCTO_DETA">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Compra_Detalle" EntitySet="Compra_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIST_EMP" Association="Self.FK_DIST_EMP">
+            <End Role="Distrito" EntitySet="Distrito" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIPOUSU_EMP" Association="Self.FK_TIPOUSU_EMP">
+            <End Role="Tipo_Usuario" EntitySet="Tipo_Usuario" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <FunctionImport Name="usp_detalle_producto" ReturnType="Collection(TechnologyModel.usp_detalle_producto_Result)">
+          <Parameter Name="cod" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_listar_productos" ReturnType="Collection(TechnologyModel.usp_listar_productos_Result)" />
+          <FunctionImport Name="usp_logincliente" ReturnType="Collection(Int32)">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="pass" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_transaccion_compra_cabecera">
+            <Parameter Name="id_comp" Mode="In" Type="Int32" />
+            <Parameter Name="cod_cli" Mode="In" Type="Int32" />
+            <Parameter Name="fec_ped_comp" Mode="In" Type="DateTime" />
+            <Parameter Name="fec_ent_comp" Mode="In" Type="DateTime" />
+            <Parameter Name="est_comp" Mode="In" Type="Int32" />
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_insertar_compra_detalle">
+            <Parameter Name="id_comp" Mode="In" Type="Int32" />
+            <Parameter Name="cod_prod" Mode="In" Type="Int32" />
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_detalle_compra" ReturnType="Collection(TechnologyModel.usp_detalle_compra_Result)">
+          <Parameter Name="idcomp" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_registrar_cliente">
+            <Parameter Name="nomcli" Mode="In" Type="String" />
+            <Parameter Name="apecli" Mode="In" Type="String" />
+            <Parameter Name="dnicli" Mode="In" Type="String" />
+            <Parameter Name="tlfcli" Mode="In" Type="String" />
+            <Parameter Name="dircli" Mode="In" Type="String" />
+            <Parameter Name="iddist" Mode="In" Type="Int32" />
+            <Parameter Name="emailcli" Mode="In" Type="String" />
+            <Parameter Name="passcli" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_editar_cliente">
+            <Parameter Name="codcli" Mode="In" Type="Int32" />
+            <Parameter Name="nomcli" Mode="In" Type="String" />
+            <Parameter Name="apecli" Mode="In" Type="String" />
+            <Parameter Name="iddist" Mode="In" Type="Int32" />
+            <Parameter Name="dircli" Mode="In" Type="String" />
+            <Parameter Name="tlfcli" Mode="In" Type="String" />
+            <Parameter Name="passcli" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_listar_empleados" ReturnType="Collection(TechnologyModel.usp_adm_listar_empleados_Result)" />
+          <FunctionImport Name="usp_adm_loginadmin" ReturnType="Collection(Int32)">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="pass" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_registrar_empleado">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="apellido" Mode="In" Type="String" />
+            <Parameter Name="dni" Mode="In" Type="String" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="direccion" Mode="In" Type="String" />
+            <Parameter Name="coddis" Mode="In" Type="Int32" />
+            <Parameter Name="codcargo" Mode="In" Type="Int32" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="pass" Mode="In" Type="String" />
+            <Parameter Name="codtipusu" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_actualizar_empleado">
+            <Parameter Name="codigo" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="apellido" Mode="In" Type="String" />
+            <Parameter Name="dni" Mode="In" Type="String" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="direccion" Mode="In" Type="String" />
+            <Parameter Name="iddistrito" Mode="In" Type="Int32" />
+            <Parameter Name="idcargo" Mode="In" Type="Int32" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="pass" Mode="In" Type="String" />
+            <Parameter Name="idtipusu" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_cargo_actualizar">
+            <Parameter Name="codigo" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_cargo_eliminar">
+          <Parameter Name="codigo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_cargo_listar" ReturnType="Collection(TechnologyModel.usp_adm_cargo_listar_Result)" />
+          <FunctionImport Name="usp_adm_cargo_registrar">
+          <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_categoria_actualizar">
+            <Parameter Name="codigo" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_categoria_eliminar">
+          <Parameter Name="codigo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_categoria_listar" ReturnType="Collection(TechnologyModel.usp_adm_categoria_listar_Result)" />
+          <FunctionImport Name="usp_adm_categoria_registrar">
+          <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_cliente_actualizar">
+            <Parameter Name="codigo" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="apellido" Mode="In" Type="String" />
+            <Parameter Name="dni" Mode="In" Type="String" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="direccion" Mode="In" Type="String" />
+            <Parameter Name="distrito" Mode="In" Type="Int32" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_cliente_eliminar">
+          <Parameter Name="codigo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_cliente_listar" ReturnType="Collection(TechnologyModel.usp_adm_cliente_listar_Result)" />
+          <FunctionImport Name="usp_adm_compra_lista" ReturnType="Collection(TechnologyModel.usp_adm_compra_lista_Result)" />
+          <FunctionImport Name="usp_adm_distrito_actualizar">
+            <Parameter Name="codigo" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_distrito_eliminar">
+          <Parameter Name="codigo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_distrito_listar" ReturnType="Collection(TechnologyModel.usp_adm_distrito_listar_Result)" />
+          <FunctionImport Name="usp_adm_distrito_registrar">
+          <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_eliminar_empleado">
+          <Parameter Name="codigoemp" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_producto_actualizar">
+            <Parameter Name="codigo" Mode="In" Type="Int32" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+            <Parameter Name="precio" Mode="In" Type="Decimal" />
+            <Parameter Name="stockact" Mode="In" Type="Int32" />
+            <Parameter Name="stockmin" Mode="In" Type="Int32" />
+            <Parameter Name="idcateg" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_producto_eliminar">
+          <Parameter Name="codigo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_producto_listar" ReturnType="Collection(TechnologyModel.usp_adm_producto_listar_Result)" />
+          <FunctionImport Name="usp_adm_producto_registrar">
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+            <Parameter Name="precio" Mode="In" Type="Decimal" />
+            <Parameter Name="stockact" Mode="In" Type="Int32" />
+            <Parameter Name="stockmin" Mode="In" Type="Int32" />
+            <Parameter Name="idcateg" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_tipousuario_actualizar">
+            <Parameter Name="codigo" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_tipousuario_eliminar">
+          <Parameter Name="codigo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_adm_tipousuario_listar" ReturnType="Collection(TechnologyModel.usp_adm_tipousuario_listar_Result)" />
+          <FunctionImport Name="usp_adm_tipousuario_registrar">
+          <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="usp_detalle_producto_Result">
+          <Property Type="Int32" Name="idProducto" Nullable="false" />
+          <Property Type="String" Name="desProducto" Nullable="false" MaxLength="100" />
+          <Property Type="Decimal" Name="precioProducto" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="idCategoria" Nullable="false" />
+          <Property Type="String" Name="nomCategoria" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="stock_act" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="usp_listar_productos_Result">
+          <Property Type="Int32" Name="idProducto" Nullable="false" />
+          <Property Type="String" Name="desProducto" Nullable="false" MaxLength="100" />
+          <Property Type="Decimal" Name="precioProducto" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="idCategoria" Nullable="false" />
+          <Property Type="String" Name="nomCategoria" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="stock_act" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="usp_detalle_compra_Result">
+          <Property Type="Int32" Name="idCompra" Nullable="false" />
+          <Property Type="Int32" Name="idProducto" Nullable="false" />
+          <Property Type="String" Name="desProducto" Nullable="false" MaxLength="100" />
+          <Property Type="Decimal" Name="precioProducto" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="usp_adm_listar_empleados_Result">
+          <Property Type="Int32" Name="idEmpleado" Nullable="false" />
+          <Property Type="String" Name="nomEmpleado" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="apeEmpleado" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="dniEmpleado" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="tlfEmpleado" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="direcEmpleado" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="nomDistrito" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="nomCargo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="emailEmpleado" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="passEmpleado" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="nomTipoUsuario" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="usp_adm_cargo_listar_Result">
+          <Property Type="Int32" Name="idCargo" Nullable="false" />
+          <Property Type="String" Name="nomCargo" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="usp_adm_categoria_listar_Result">
+          <Property Type="Int32" Name="idCategoria" Nullable="false" />
+          <Property Type="String" Name="nomCategoria" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="usp_adm_cliente_listar_Result">
+          <Property Type="Int32" Name="idCliente" Nullable="false" />
+          <Property Type="String" Name="nomCliente" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="apeCliente" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="dniCliente" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="tlfCliente" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="direcCliente" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="nomDistrito" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="emailCliente" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="passCliente" Nullable="false" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="usp_adm_compra_lista_Result">
+          <Property Type="Int32" Name="idCompra" Nullable="false" />
+          <Property Type="String" Name="nomCliente" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="apeCliente" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="fec_ped_comp" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="fec_ent_comp" Nullable="false" Precision="23" />
+          <Property Type="String" Name="desProducto" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="est_comp" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="usp_adm_distrito_listar_Result">
+          <Property Type="Int32" Name="idDistrito" Nullable="false" />
+          <Property Type="String" Name="nomDistrito" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="usp_adm_producto_listar_Result">
+          <Property Type="Int32" Name="idProducto" Nullable="false" />
+          <Property Type="String" Name="desProducto" Nullable="false" MaxLength="100" />
+          <Property Type="Decimal" Name="precioProducto" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="stock_act" Nullable="false" />
+          <Property Type="Int32" Name="stock_min" Nullable="false" />
+          <Property Type="String" Name="nomCategoria" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="usp_adm_tipousuario_listar_Result">
+          <Property Type="Int32" Name="idTipoUsuario" Nullable="false" />
+          <Property Type="String" Name="nomTipoUsuario" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TechnologyModelStoreContainer" CdmEntityContainer="TechnologyDataEntities">
+          <EntitySetMapping Name="Cargo">
+            <EntityTypeMapping TypeName="TechnologyModel.Cargo">
+              <MappingFragment StoreEntitySet="Cargo">
+                <ScalarProperty Name="idCargo" ColumnName="idCargo" />
+                <ScalarProperty Name="nomCargo" ColumnName="nomCargo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="TechnologyModel.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+                <ScalarProperty Name="nomCategoria" ColumnName="nomCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="TechnologyModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+                <ScalarProperty Name="nomCliente" ColumnName="nomCliente" />
+                <ScalarProperty Name="apeCliente" ColumnName="apeCliente" />
+                <ScalarProperty Name="dniCliente" ColumnName="dniCliente" />
+                <ScalarProperty Name="tlfCliente" ColumnName="tlfCliente" />
+                <ScalarProperty Name="direcCliente" ColumnName="direcCliente" />
+                <ScalarProperty Name="idDistrito" ColumnName="idDistrito" />
+                <ScalarProperty Name="emailCliente" ColumnName="emailCliente" />
+                <ScalarProperty Name="passCliente" ColumnName="passCliente" />
+                <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Compra_Cabecera">
+            <EntityTypeMapping TypeName="TechnologyModel.Compra_Cabecera">
+              <MappingFragment StoreEntitySet="Compra_Cabecera">
+                <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+                <ScalarProperty Name="fec_ped_comp" ColumnName="fec_ped_comp" />
+                <ScalarProperty Name="fec_ent_comp" ColumnName="fec_ent_comp" />
+                <ScalarProperty Name="est_comp" ColumnName="est_comp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Compra_Detalle">
+            <EntityTypeMapping TypeName="TechnologyModel.Compra_Detalle">
+              <MappingFragment StoreEntitySet="Compra_Detalle">
+                <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Distrito">
+            <EntityTypeMapping TypeName="TechnologyModel.Distrito">
+              <MappingFragment StoreEntitySet="Distrito">
+                <ScalarProperty Name="idDistrito" ColumnName="idDistrito" />
+                <ScalarProperty Name="nomDistrito" ColumnName="nomDistrito" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleado">
+            <EntityTypeMapping TypeName="TechnologyModel.Empleado">
+              <MappingFragment StoreEntitySet="Empleado">
+                <ScalarProperty Name="idEmpleado" ColumnName="idEmpleado" />
+                <ScalarProperty Name="nomEmpleado" ColumnName="nomEmpleado" />
+                <ScalarProperty Name="apeEmpleado" ColumnName="apeEmpleado" />
+                <ScalarProperty Name="dniEmpleado" ColumnName="dniEmpleado" />
+                <ScalarProperty Name="tlfEmpleado" ColumnName="tlfEmpleado" />
+                <ScalarProperty Name="direcEmpleado" ColumnName="direcEmpleado" />
+                <ScalarProperty Name="idDistrito" ColumnName="idDistrito" />
+                <ScalarProperty Name="idCargo" ColumnName="idCargo" />
+                <ScalarProperty Name="emailEmpleado" ColumnName="emailEmpleado" />
+                <ScalarProperty Name="passEmpleado" ColumnName="passEmpleado" />
+                <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="TechnologyModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="desProducto" ColumnName="desProducto" />
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+                <ScalarProperty Name="precioProducto" ColumnName="precioProducto" />
+                <ScalarProperty Name="stock_act" ColumnName="stock_act" />
+                <ScalarProperty Name="stock_min" ColumnName="stock_min" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipo_Usuario">
+            <EntityTypeMapping TypeName="TechnologyModel.Tipo_Usuario">
+              <MappingFragment StoreEntitySet="Tipo_Usuario">
+                <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
+                <ScalarProperty Name="nomTipoUsuario" ColumnName="nomTipoUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_detalle_producto" FunctionName="TechnologyModel.Store.usp_detalle_producto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TechnologyModel.usp_detalle_producto_Result">
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="desProducto" ColumnName="desProducto" />
+                <ScalarProperty Name="precioProducto" ColumnName="precioProducto" />
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+                <ScalarProperty Name="nomCategoria" ColumnName="nomCategoria" />
+                <ScalarProperty Name="stock_act" ColumnName="stock_act" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_listar_productos" FunctionName="TechnologyModel.Store.usp_listar_productos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TechnologyModel.usp_listar_productos_Result">
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="desProducto" ColumnName="desProducto" />
+                <ScalarProperty Name="precioProducto" ColumnName="precioProducto" />
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+                <ScalarProperty Name="nomCategoria" ColumnName="nomCategoria" />
+                <ScalarProperty Name="stock_act" ColumnName="stock_act" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_logincliente" FunctionName="TechnologyModel.Store.usp_logincliente" />
+          <FunctionImportMapping FunctionImportName="usp_transaccion_compra_cabecera" FunctionName="TechnologyModel.Store.usp_transaccion_compra_cabecera" />
+          <FunctionImportMapping FunctionImportName="usp_insertar_compra_detalle" FunctionName="TechnologyModel.Store.usp_insertar_compra_detalle" />
+          <FunctionImportMapping FunctionImportName="usp_detalle_compra" FunctionName="TechnologyModel.Store.usp_detalle_compra">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TechnologyModel.usp_detalle_compra_Result">
+                <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="desProducto" ColumnName="desProducto" />
+                <ScalarProperty Name="precioProducto" ColumnName="precioProducto" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_registrar_cliente" FunctionName="TechnologyModel.Store.usp_registrar_cliente" />
+          <FunctionImportMapping FunctionImportName="usp_editar_cliente" FunctionName="TechnologyModel.Store.usp_editar_cliente" />
+          <FunctionImportMapping FunctionImportName="usp_adm_listar_empleados" FunctionName="TechnologyModel.Store.usp_adm_listar_empleados">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TechnologyModel.usp_adm_listar_empleados_Result">
+                <ScalarProperty Name="idEmpleado" ColumnName="idEmpleado" />
+                <ScalarProperty Name="nomEmpleado" ColumnName="nomEmpleado" />
+                <ScalarProperty Name="apeEmpleado" ColumnName="apeEmpleado" />
+                <ScalarProperty Name="dniEmpleado" ColumnName="dniEmpleado" />
+                <ScalarProperty Name="tlfEmpleado" ColumnName="tlfEmpleado" />
+                <ScalarProperty Name="direcEmpleado" ColumnName="direcEmpleado" />
+                <ScalarProperty Name="nomDistrito" ColumnName="nomDistrito" />
+                <ScalarProperty Name="nomCargo" ColumnName="nomCargo" />
+                <ScalarProperty Name="emailEmpleado" ColumnName="emailEmpleado" />
+                <ScalarProperty Name="passEmpleado" ColumnName="passEmpleado" />
+                <ScalarProperty Name="nomTipoUsuario" ColumnName="nomTipoUsuario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_adm_loginadmin" FunctionName="TechnologyModel.Store.usp_adm_loginadmin" />
+          <FunctionImportMapping FunctionImportName="usp_adm_registrar_empleado" FunctionName="TechnologyModel.Store.usp_adm_registrar_empleado" />
+          <FunctionImportMapping FunctionImportName="usp_adm_actualizar_empleado" FunctionName="TechnologyModel.Store.usp_adm_actualizar_empleado" />
+          <FunctionImportMapping FunctionImportName="usp_adm_cargo_actualizar" FunctionName="TechnologyModel.Store.usp_adm_cargo_actualizar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_cargo_eliminar" FunctionName="TechnologyModel.Store.usp_adm_cargo_eliminar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_cargo_listar" FunctionName="TechnologyModel.Store.usp_adm_cargo_listar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TechnologyModel.usp_adm_cargo_listar_Result">
+                <ScalarProperty Name="idCargo" ColumnName="idCargo" />
+                <ScalarProperty Name="nomCargo" ColumnName="nomCargo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_adm_cargo_registrar" FunctionName="TechnologyModel.Store.usp_adm_cargo_registrar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_categoria_actualizar" FunctionName="TechnologyModel.Store.usp_adm_categoria_actualizar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_categoria_eliminar" FunctionName="TechnologyModel.Store.usp_adm_categoria_eliminar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_categoria_listar" FunctionName="TechnologyModel.Store.usp_adm_categoria_listar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TechnologyModel.usp_adm_categoria_listar_Result">
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+                <ScalarProperty Name="nomCategoria" ColumnName="nomCategoria" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_adm_categoria_registrar" FunctionName="TechnologyModel.Store.usp_adm_categoria_registrar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_cliente_actualizar" FunctionName="TechnologyModel.Store.usp_adm_cliente_actualizar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_cliente_eliminar" FunctionName="TechnologyModel.Store.usp_adm_cliente_eliminar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_cliente_listar" FunctionName="TechnologyModel.Store.usp_adm_cliente_listar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TechnologyModel.usp_adm_cliente_listar_Result">
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+                <ScalarProperty Name="nomCliente" ColumnName="nomCliente" />
+                <ScalarProperty Name="apeCliente" ColumnName="apeCliente" />
+                <ScalarProperty Name="dniCliente" ColumnName="dniCliente" />
+                <ScalarProperty Name="tlfCliente" ColumnName="tlfCliente" />
+                <ScalarProperty Name="direcCliente" ColumnName="direcCliente" />
+                <ScalarProperty Name="nomDistrito" ColumnName="nomDistrito" />
+                <ScalarProperty Name="emailCliente" ColumnName="emailCliente" />
+                <ScalarProperty Name="passCliente" ColumnName="passCliente" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_adm_compra_lista" FunctionName="TechnologyModel.Store.usp_adm_compra_lista">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TechnologyModel.usp_adm_compra_lista_Result">
+                <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+                <ScalarProperty Name="nomCliente" ColumnName="nomCliente" />
+                <ScalarProperty Name="apeCliente" ColumnName="apeCliente" />
+                <ScalarProperty Name="fec_ped_comp" ColumnName="fec_ped_comp" />
+                <ScalarProperty Name="fec_ent_comp" ColumnName="fec_ent_comp" />
+                <ScalarProperty Name="desProducto" ColumnName="desProducto" />
+                <ScalarProperty Name="est_comp" ColumnName="est_comp" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_adm_distrito_actualizar" FunctionName="TechnologyModel.Store.usp_adm_distrito_actualizar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_distrito_eliminar" FunctionName="TechnologyModel.Store.usp_adm_distrito_eliminar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_distrito_listar" FunctionName="TechnologyModel.Store.usp_adm_distrito_listar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TechnologyModel.usp_adm_distrito_listar_Result">
+                <ScalarProperty Name="idDistrito" ColumnName="idDistrito" />
+                <ScalarProperty Name="nomDistrito" ColumnName="nomDistrito" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_adm_distrito_registrar" FunctionName="TechnologyModel.Store.usp_adm_distrito_registrar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_eliminar_empleado" FunctionName="TechnologyModel.Store.usp_adm_eliminar_empleado" />
+          <FunctionImportMapping FunctionImportName="usp_adm_producto_actualizar" FunctionName="TechnologyModel.Store.usp_adm_producto_actualizar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_producto_eliminar" FunctionName="TechnologyModel.Store.usp_adm_producto_eliminar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_producto_listar" FunctionName="TechnologyModel.Store.usp_adm_producto_listar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TechnologyModel.usp_adm_producto_listar_Result">
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="desProducto" ColumnName="desProducto" />
+                <ScalarProperty Name="precioProducto" ColumnName="precioProducto" />
+                <ScalarProperty Name="stock_act" ColumnName="stock_act" />
+                <ScalarProperty Name="stock_min" ColumnName="stock_min" />
+                <ScalarProperty Name="nomCategoria" ColumnName="nomCategoria" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_adm_producto_registrar" FunctionName="TechnologyModel.Store.usp_adm_producto_registrar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_tipousuario_actualizar" FunctionName="TechnologyModel.Store.usp_adm_tipousuario_actualizar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_tipousuario_eliminar" FunctionName="TechnologyModel.Store.usp_adm_tipousuario_eliminar" />
+          <FunctionImportMapping FunctionImportName="usp_adm_tipousuario_listar" FunctionName="TechnologyModel.Store.usp_adm_tipousuario_listar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TechnologyModel.usp_adm_tipousuario_listar_Result">
+                <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
+                <ScalarProperty Name="nomTipoUsuario" ColumnName="nomTipoUsuario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_adm_tipousuario_registrar" FunctionName="TechnologyModel.Store.usp_adm_tipousuario_registrar" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,106 @@
+﻿@model IEnumerable<TechnologyStore.Models.Compra_Detalle>
+@using TechnologyStore.Models
+
+@{
+    ViewBag.Title = "Carrito de Compra";
+    Layout = "~/Views/Shared/_LayoutProductos.cshtml";
+}
+
+
+
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a href="@Url.Action("ListadoProductos", "Producto")">Inicio</a>
+                    <i>|</i>
+                </li>
+                <li>Carrito de compras</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- checkout page -->
+<div class="privacy py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>C</span>arrito <span>d</span>e <span>C</span>ompras
+        </h3>
+        <!-- //tittle heading -->
+        <div class="checkout-right">
+
+            <div class="table-responsive">
+                <table class="timetable_sub">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Nombre del producto</th>
+
+                            <th>Precio</th>
+                            <th>¿Eliminar?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ decimal suma = 0;
+                            int cantidad = 0;}
+                        @foreach (var item in Model)
+                        {
+                            <tr class="rem1">
+                                <td class="invert">@Html.DisplayFor(modelItem => item.idProducto)</td>
+                                <td class="invert-image">
+                                    <a href="#">
+                                        <img src="~/Content/images/@(Html.DisplayFor(modelItem => item.idProducto)).jpg" alt=" " class="img-responsive">
+                                    </a>
+                                </td>
+                                <td class="invert">
+                                    <div class="quantity">
+                                        <div class="quantity-select">
+                                            <div class="entry value">
+                                                <span>1</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="invert">@Html.DisplayFor(modelItem => item.Producto.desProducto)</td>
+                                <td class="invert">@Html.DisplayFor(modelItem => item.Producto.precioProducto)</td>
+                                @{ suma = suma + item.Producto.precioProducto;
+                                    cantidad++;}
+                                <td class="invert">
+                                    <div class="rem">
+                                        @Html.ActionLink("Eliminar", "QuitarProducto", new { id = item.idProducto }, new { @class = "btn btn-danger" })
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <h4 class="mb-sm-4 mb-3">
+                Tienes un total de:
+                <span>@cantidad producto(s)</span> <br />s
+                A pagar un total de: S/ @suma.ToString("#.##")
+            </h4>
+
+            @if (((List<Compra_Detalle>)Session["carrito"]).Count > 0)
+            {
+                <div class="checkout-right-basket">
+                    <a href="@Url.Action("RealizarCompra","Producto")">
+                        Pago Normal
+                        <span class="far fa-hand-point-right"></span>
+                    </a>
+                </div>
+                <div>
+                    @Html.ActionLink("Pagar con Paypal", "PaymentWithPaypal", "Paypal", null, new { @class = "btn btn-primary" })
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+<!-- //checkout page -->

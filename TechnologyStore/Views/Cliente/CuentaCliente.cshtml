@@ -1,0 +1,148 @@
+﻿@model TechnologyStore.Models.Cliente
+@using TechnologyStore.Models
+
+@{
+    ViewBag.Title = "Cuenta Cliente";
+    Layout = "~/Views/Shared/_LayoutProductos.cshtml";
+}
+
+
+
+
+
+<div class="page-head_agile_info_w3l">
+</div>
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a href="@Url.Action("ListadoProductos", "Producto")">Inicio</a>
+                    <i>|</i>
+                </li>
+                <li>Mi cuenta</li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="banner-bootom-w3-agileits py-5">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-left mb-lg-5 mb-sm-4 mb-3">
+            <span>M</span>i
+            <span>C</span>uenta <br />
+            @Html.ActionLink("Cerrar sesión", "CerrarSesionCliente", null, new { @class = "boton1" })
+        </h3>
+        <!-- //tittle heading -->
+        <div class="row">
+            <div class="col-lg-4 single-right-left simpleCart_shelfItem">
+                <h3 class="mb-3">@Html.DisplayFor(model => model.nomCliente)  @Html.DisplayFor(model => model.apeCliente)</h3>
+
+                <div class="product-single-w3l">
+                    <ul>
+                        <li class="mb-1">
+                            @Html.DisplayNameFor(model => model.dniCliente): @Html.DisplayFor(model => model.dniCliente)
+                        </li>
+                        <li class="mb-1">
+                            @Html.DisplayNameFor(model => model.direcCliente): @Html.DisplayFor(model => model.direcCliente)
+                        </li>
+                        <li class="mb-1">
+                            @Html.DisplayNameFor(model => model.emailCliente): @Html.DisplayFor(model => model.emailCliente)
+                        </li>
+                        <li class="mb-1">
+                            @Html.DisplayNameFor(model => model.tlfCliente): @Html.DisplayFor(model => model.tlfCliente)
+                        </li>
+                        <li class="mb-1">
+                            @Html.DisplayNameFor(model => model.Distrito.nomDistrito): @Html.DisplayFor(model => model.Distrito.nomDistrito)
+                        </li>
+                    </ul>
+                </div>
+                <p class="my-sm-4 my-3">
+
+                </p>
+                <div class="occasion-cart">
+                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                        <form action="#" method="post">
+                            <fieldset>
+                                @Html.ActionLink("Editar", "EditarCliente", new { id = Model.idCliente }, new { @class = "boton1" }) <br /><br />
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8 col-md-8 single-right-left ">
+                <div class="dl-horizontal">
+
+                    @{ TechnologyDataEntities bd = new TechnologyDataEntities();
+                        List<Compra_Cabecera> cc = bd.Compra_Cabecera.Where(x => x.idCliente == (Model.idCliente)).ToList();
+                        if (cc.Count > 0)
+                        {
+                            <h3 class="mb-3">Mis compras:</h3>
+                            <div class="product-single-w3l">
+                                <table class="table">
+                                    <tr>
+                                        <th>Compra</th>
+                                        <th>Elementos</th>
+                                        <th>¿Cancelar?</th>
+                                    </tr>
+                                    @if (cc.Count > 0)
+                                    {
+
+                                        ViewBag.compras = cc;
+                                        for (int i = 0; i < cc.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    Código: @cc.ElementAt(i).idCompra <br />
+                                                    Fecha: @cc.ElementAt(i).fec_ped_comp <br />
+                                                    Entrega: @cc.ElementAt(i).fec_ent_comp<br />
+                                                    @{ string estado = null;
+                                                        if (cc.ElementAt(i).est_comp == 0)
+                                                        {
+                                                            estado = "Pendiente";
+                                                        }
+                                                        else if (cc.ElementAt(i).est_comp == 1)
+                                                        {
+                                                            estado = "Entregado";
+                                                        }
+                                                        else
+                                                        {
+                                                            estado = "Cancelado";
+                                                        }
+                                                    }
+                                                    Estado: @estado
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        int idcomp = cc.ElementAt(i).idCompra;
+                                                        List<usp_detalle_compra_Result> lista = bd.usp_detalle_compra(idcomp).ToList();
+                                                        foreach (usp_detalle_compra_Result dc in lista)
+                                                        {
+                                                            int codprod = dc.idProducto;
+                                                            <text>Producto: @dc.desProducto</text> <br />
+                                                            <text>Precio: S/ @dc.precioProducto.ToString("#.##")</text> <br /> <br />
+                                                        }
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (cc.ElementAt(i).est_comp == 0)
+                                                    {
+                                                        @Html.ActionLink("Cancelar", "CancelarCompra", "Producto", new { id = cc.ElementAt(i).idCompra }, new { @class = "btn btn-danger" })
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //Single Page -->
